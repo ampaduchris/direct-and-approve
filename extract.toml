@@ -42,6 +42,26 @@ to = "calibration"
 from = "HERE.parents[3]"
 to = "HERE.parents[1]"
 
+# F-01 of review 9.4 (issue 5): running the proof must leave method/ as it found it. prove.py runs
+# pytest inside each example and writes its transcript next to itself. Under method/ the pytest
+# cache provider is off, no bytecode is written, and the transcript goes to the system temporary
+# folder. The PROOF.txt that ships is the transcript of one earlier run. Not a kit script (REQ-071).
+[[replacement]]
+from = 'subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)'
+to = 'subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, env={**__import__("os").environ, "PYTEST_ADDOPTS": "-p no:cacheprovider", "PYTHONDONTWRITEBYTECODE": "1"})'
+
+[[replacement]]
+from = 'subprocess.run([PY, "-c", code], cwd=cwd, capture_output=True, text=True)'
+to = 'subprocess.run([PY, "-c", code], cwd=cwd, capture_output=True, text=True, env={**__import__("os").environ, "PYTHONDONTWRITEBYTECODE": "1"})'
+
+[[replacement]]
+from = '(HERE / "PROOF.txt").write_text("\n".join(log))'
+to = '(Path(__import__("tempfile").gettempdir()) / "PROOF.txt").write_text("\n".join(log))'
+
+[[replacement]]
+from = 'output to PROOF.txt beside this file.'
+to = 'output to PROOF.txt in the system temporary folder.'
+
 # N12: the independent-review skill names real session ids and the unpublished upstream procedure.
 # Literal replacements generalise or remove them. The forbidden patterns below refuse the run if the
 # source text drifts so that any of it survives.

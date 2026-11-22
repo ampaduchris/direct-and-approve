@@ -60,7 +60,7 @@
     {
       "path": "SETUP.md",
       "kind": "static",
-      "sha256": "e3f448c9925d8d014974a5e200a8c40f9f1558a4459bb8b0345cd4af8cada0f3"
+      "sha256": "f7ad51b78389097ce893c6d643f4612e6bc446eb7fbdabb214847b472ea54f30"
     },
     {
       "path": "STANDARD.md",
@@ -80,7 +80,7 @@
     {
       "path": "calibration/README.md",
       "kind": "static",
-      "sha256": "6b71fb60926299f049c5d8e689d9ad0db35fcd512ed85d111e76381afe2acb10"
+      "sha256": "ff843dcb1f18fb262924dce028c1ad5d0517e9b8c349f040a17a654fd4ab5a14"
     },
     {
       "path": "calibration/_answers/EXPECTED.md",
@@ -95,12 +95,12 @@
     {
       "path": "calibration/_answers/README.md",
       "kind": "static",
-      "sha256": "810cdc641f39c94d9c896d49e2ba6efba6db3bba2fd8131e7d0cdc4f89c14c39"
+      "sha256": "f40b51b633216dc069d55a7841ffa19ac932c22841d26ccb438d5189b884697c"
     },
     {
       "path": "calibration/_answers/prove.py",
       "kind": "tree",
-      "sha256": "847f66172a3f5b16709d56e7fad2b508833e66ff2f3fae1ef4898d2e195e0370"
+      "sha256": "6b3e491df9904ba3ee3cc27417d0d815199eca6614a705d7d5af5f9ff53d0697"
     },
     {
       "path": "calibration/ex01/PR-BODY.md",
