@@ -42,6 +42,43 @@ to = "calibration"
 from = "HERE.parents[3]"
 to = "HERE.parents[1]"
 
+# N12: the independent-review skill names real session ids and the unpublished upstream procedure.
+# Literal replacements generalise or remove them. The forbidden patterns below refuse the run if the
+# source text drifts so that any of it survives.
+[[replacement]]
+from = " (1.7, 2.9, 3.9, 7.4, 9.4, N.4) and in upstream step 8"
+to = " of a build"
+
+[[replacement]]
+from = " or `upstream/<project>/`"
+to = ""
+
+[[replacement]]
+from = "**TypeScript (builds 03 and 05).**"
+to = "**TypeScript builds.**"
+
+[[replacement]]
+from = "**Evals and prompts (session 7.4).**"
+to = "**Evals and prompts.**"
+
+[[replacement]]
+from = "**Method repo (session 9.4).**"
+to = "**Method repo.**"
+
+[[replacement]]
+from = '''**Upstream step 8.** Read only the diff and the project's rules recorded at Gate C. Run the project's own test command for the touched tests. Check that the new test fails without the fix:
+
+```bash
+git diff <base>...HEAD -- <source paths, not tests> > <scratch>/fix.patch
+git apply -R <scratch>/fix.patch && <the project's command for the new test>; git apply <scratch>/fix.patch
+git status --porcelain        # must match what it printed before
+```
+
+The test must fail in the middle and pass at the end. Also check `git diff --name-only <base>...HEAD` touches no CI file and `git diff --shortstat <base>...HEAD` fits the size the project allows. Write `upstream/<project>/_evidence/<item>/review.md` in the same finding format. Post nothing. Open no issue.
+
+'''
+to = ""
+
 # ---- S1 procedure and S2 standard ------------------------------------------------------------
 
 [[entry]]
@@ -73,7 +110,7 @@ target = "method/tools/section.py"
 replace = false
 
 # tools/brief.py is NOT listed. The owner chose to publish it (DEV-005), but it names real build folders
-# and reads the unpublished upstream ledger (N11). Session 9.2 raises a GATE before this entry exists.
+# and reads the unpublished upstream ledger (N11). Session 9.2 raised the GATE (DEV-008); the entry waits for the owner's answer.
 # [[entry]]
 # kind = "copy"
 # source = "tools/brief.py"
@@ -103,20 +140,22 @@ source = "private/frontload/F12-calibration"
 target = "method/calibration"
 include = ["**/*"]
 # README.md is a static entry below, so that it carries the demonstration-only notice (REQ-073).
-exclude = ["README.md", "**/__pycache__/**", "**/*.pyc", "**/.pytest_cache/**"]
+exclude = ["README.md", "**/.DS_Store", "**/__pycache__/**", "**/*.pyc", "**/.pytest_cache/**"]
 replace_in = ["**/*.md", "**/*.py", "**/*.txt"]
 
 # ---- Static files written for the public ----------------------------------------------------------
 
-[[entry]]
-kind = "static"
-source = "static/SETUP.md"
-target = "method/SETUP.md"
+# Added in session 9.3 (DEV-007): static/SETUP.md is written for the public then.
+# [[entry]]
+# kind = "static"
+# source = "static/SETUP.md"
+# target = "method/SETUP.md"
 
-[[entry]]
-kind = "static"
-source = "static/FRONTLOAD.md"
-target = "method/FRONTLOAD.md"
+# Added in session 9.3 (DEV-007): static/FRONTLOAD.md is written for the public then.
+# [[entry]]
+# kind = "static"
+# source = "static/FRONTLOAD.md"
+# target = "method/FRONTLOAD.md"
 
 [[entry]]
 kind = "static"
@@ -161,6 +200,9 @@ patterns = [
   # A link to a private artifact or session of the agent's app.
   'claude\.ai/(?:code|artifact|epitaxy|chat)',
   'claude://',
+  # The upstream procedure is not published (REQ-014 withdrawn, DEV-004).
+  'Gate C',
+  'Upstream step',
 ]
 
 # ---- Privacy boundary (REQ-111, REQ-112) ----------------------------------------------------------
@@ -177,6 +219,7 @@ forbidden_paths = [
 # Exceptions to forbidden_paths.
 allow_paths = [
   "method/private/denylist.example.txt",
+  "static/private/denylist.example.txt",
   "method/builds/00-example",
   "method/builds/00-example/*",
   "tests/fixtures/**",

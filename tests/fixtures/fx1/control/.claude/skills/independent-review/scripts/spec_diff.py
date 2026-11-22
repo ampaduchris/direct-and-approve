@@ -1,3 +1,3 @@
 #!/usr/bin/env python3
-# kit script spec_diff. Mentions adafixture on purpose: no replacement may touch a .py under a skills tree.
+# kit script spec_diff
 print("spec_diff")

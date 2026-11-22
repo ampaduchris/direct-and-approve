@@ -1,0 +1,441 @@
+{
+  "schema": 1,
+  "source_date": "2026-11-22",
+  "files": [
+    {
+      "path": ".claude/skills/independent-review/SKILL.md",
+      "kind": "tree",
+      "sha256": "378a2578e4e8df03f28ea06becea4ef66f2d2cd7c3fdf751afbca8aeb982aa3d"
+    },
+    {
+      "path": ".claude/skills/independent-review/scripts/literal_overlap.py",
+      "kind": "tree",
+      "sha256": "175d507e603da13500b609cbdb61735b99def2b6112cde1e052875e25d4fdffd"
+    },
+    {
+      "path": ".claude/skills/independent-review/scripts/mutate_check.py",
+      "kind": "tree",
+      "sha256": "c94303a8dbddcf884407fc9f763e1bdde501dcdbd35ada016483c73050aa2935"
+    },
+    {
+      "path": ".claude/skills/independent-review/scripts/req_run.py",
+      "kind": "tree",
+      "sha256": "29551299fa04a691194e5df7a59d31d5ad732b7cf8b2de7901cd8d433eaa77e3"
+    },
+    {
+      "path": ".claude/skills/independent-review/scripts/reqprobe.py",
+      "kind": "tree",
+      "sha256": "887a14cdbd1b8d90870136ffbd59a255e8f46fe7e93939fcf9be37e8bdd5c48e"
+    },
+    {
+      "path": ".claude/skills/independent-review/scripts/spec_diff.py",
+      "kind": "tree",
+      "sha256": "1c78de65d0094020e758368cdaf673162afe1ef8428f01dad44a305145710b91"
+    },
+    {
+      "path": ".claude/skills/independent-review/scripts/tier_check.py",
+      "kind": "tree",
+      "sha256": "267b8132c4bf04df49fdf7e0798f62d714cc6dd26807ccf5a1fff29d0607c1af"
+    },
+    {
+      "path": ".claude/skills/pre-pr-check/SKILL.md",
+      "kind": "tree",
+      "sha256": "572c1426dc4885b94ac1de0aff1e0c3026407ef3eb6eec14734212cfba887635"
+    },
+    {
+      "path": "CLAUDE.md",
+      "kind": "copy",
+      "sha256": "bfb201161b152bf8dd33904e4db6dd8bcb4563257c41f5a4a2eec4ac270c07df"
+    },
+    {
+      "path": "PLAN.md",
+      "kind": "static",
+      "sha256": "3bde002b130c85d7f268a455383c7147ed72d7288756651f06b45ff1099a7fcc"
+    },
+    {
+      "path": "STANDARD.md",
+      "kind": "copy",
+      "sha256": "8d920abb3830ebe32e0db1faee496b7bb889700cb831c14a359ad2bcad7fd833"
+    },
+    {
+      "path": "builds/00-example/BUILD.md",
+      "kind": "static",
+      "sha256": "8d321056e8c1309b31858a68329c708fadad09b5d49bad41acaa2f2876e63761"
+    },
+    {
+      "path": "builds/00-example/SESSIONS.md",
+      "kind": "static",
+      "sha256": "71caf026ff42732f30ba5ff20532394896d1370f90a5995a3443064c12d6ae0e"
+    },
+    {
+      "path": "calibration/README.md",
+      "kind": "static",
+      "sha256": "6b71fb60926299f049c5d8e689d9ad0db35fcd512ed85d111e76381afe2acb10"
+    },
+    {
+      "path": "calibration/_answers/EXPECTED.md",
+      "kind": "tree",
+      "sha256": "e0193768f21c40dc0788ec37f3c98b8ec3704f32004b340a2fda162a85742ea4"
+    },
+    {
+      "path": "calibration/_answers/PROOF.txt",
+      "kind": "tree",
+      "sha256": "ed743f2200e885af1f8aeb21c291a53f8e73c65130301d5b58baeaa9bca98ea8"
+    },
+    {
+      "path": "calibration/_answers/README.md",
+      "kind": "static",
+      "sha256": "810cdc641f39c94d9c896d49e2ba6efba6db3bba2fd8131e7d0cdc4f89c14c39"
+    },
+    {
+      "path": "calibration/_answers/prove.py",
+      "kind": "tree",
+      "sha256": "847f66172a3f5b16709d56e7fad2b508833e66ff2f3fae1ef4898d2e195e0370"
+    },
+    {
+      "path": "calibration/ex01/PR-BODY.md",
+      "kind": "tree",
+      "sha256": "4bf4123ffe4c89b47d780e5a2ba04c0f7f70574f5c1f26a30907b2084ec07686"
+    },
+    {
+      "path": "calibration/ex01/pytest.ini",
+      "kind": "tree",
+      "sha256": "3321eff9b8c8af07deb53f62c07d39f1df75383e1f3cd50ad7f7f309e0b604ce"
+    },
+    {
+      "path": "calibration/ex01/redact.py",
+      "kind": "tree",
+      "sha256": "1e81293fe15d5bc9b217988c911a241f031102812307348ff94a261dc20a35ec"
+    },
+    {
+      "path": "calibration/ex01/spec.adopted.md",
+      "kind": "tree",
+      "sha256": "9540a3689328af89d45c677ac605f7770756e8c973848fab7f2cf42618ef244e"
+    },
+    {
+      "path": "calibration/ex01/spec.md",
+      "kind": "tree",
+      "sha256": "9540a3689328af89d45c677ac605f7770756e8c973848fab7f2cf42618ef244e"
+    },
+    {
+      "path": "calibration/ex01/test_redact.py",
+      "kind": "tree",
+      "sha256": "a0258fe244bf3d84a565e1f548adce344d8c59f6d86ef73219fd722398d255e8"
+    },
+    {
+      "path": "calibration/ex02/PR-BODY.md",
+      "kind": "tree",
+      "sha256": "f51d586a7f83aa2693dc61f62f58e05491c2cf8be1fcb434603541b72ec62c21"
+    },
+    {
+      "path": "calibration/ex02/days.py",
+      "kind": "tree",
+      "sha256": "573bba53809e9c918ae431ef7453c1e1a722c59ffd143ccba7d57ac126cccfab"
+    },
+    {
+      "path": "calibration/ex02/pytest.ini",
+      "kind": "tree",
+      "sha256": "3321eff9b8c8af07deb53f62c07d39f1df75383e1f3cd50ad7f7f309e0b604ce"
+    },
+    {
+      "path": "calibration/ex02/spec.adopted.md",
+      "kind": "tree",
+      "sha256": "bead964421e5e54600a9b90c6a6230359858f96d752e989b20d0a3c4b8f83f66"
+    },
+    {
+      "path": "calibration/ex02/spec.md",
+      "kind": "tree",
+      "sha256": "bead964421e5e54600a9b90c6a6230359858f96d752e989b20d0a3c4b8f83f66"
+    },
+    {
+      "path": "calibration/ex02/test_days.py",
+      "kind": "tree",
+      "sha256": "1dd39478302e0c9dba7c9f8496297b42ff56480d0d9796f9ce08482904512177"
+    },
+    {
+      "path": "calibration/ex03/PR-BODY.md",
+      "kind": "tree",
+      "sha256": "4c0b993f4029a30216ae1dc724ad256a0a6b17e23ef4f6cd6eb966dc88c384ad"
+    },
+    {
+      "path": "calibration/ex03/pytest.ini",
+      "kind": "tree",
+      "sha256": "3321eff9b8c8af07deb53f62c07d39f1df75383e1f3cd50ad7f7f309e0b604ce"
+    },
+    {
+      "path": "calibration/ex03/spec.adopted.md",
+      "kind": "tree",
+      "sha256": "27e2a2e7c1a0b929ca2b9b00f30c6238c539b018502046f263703a7164e64ed0"
+    },
+    {
+      "path": "calibration/ex03/spec.md",
+      "kind": "tree",
+      "sha256": "27e2a2e7c1a0b929ca2b9b00f30c6238c539b018502046f263703a7164e64ed0"
+    },
+    {
+      "path": "calibration/ex03/test_vat.py",
+      "kind": "tree",
+      "sha256": "35d08cafba698f325e8589c45e8b310a9e6e8245605c0b541754506aa75d6815"
+    },
+    {
+      "path": "calibration/ex03/vat.py",
+      "kind": "tree",
+      "sha256": "0b49f8792d531e020ddaef88914d6ef34efbd9e390b8281bf5728c48ab2cf19e"
+    },
+    {
+      "path": "calibration/ex04/PR-BODY.md",
+      "kind": "tree",
+      "sha256": "7bd3a32f0e73b9569665a8e52381be626df8f71fb5d133098dabdf321ff15d85"
+    },
+    {
+      "path": "calibration/ex04/cards.py",
+      "kind": "tree",
+      "sha256": "94fb655fd422e781cf8b2489ac0da6d1771ff9507aedaad8a14add8ba099f7b3"
+    },
+    {
+      "path": "calibration/ex04/pytest.ini",
+      "kind": "tree",
+      "sha256": "3321eff9b8c8af07deb53f62c07d39f1df75383e1f3cd50ad7f7f309e0b604ce"
+    },
+    {
+      "path": "calibration/ex04/spec.adopted.md",
+      "kind": "tree",
+      "sha256": "a0eecb608121aad71287ddbb783c9b36c0bcb9eeb92a589971c6fef00ebdde90"
+    },
+    {
+      "path": "calibration/ex04/spec.md",
+      "kind": "tree",
+      "sha256": "a0eecb608121aad71287ddbb783c9b36c0bcb9eeb92a589971c6fef00ebdde90"
+    },
+    {
+      "path": "calibration/ex04/test_cards.py",
+      "kind": "tree",
+      "sha256": "5d3599ac6ca8edba03e95d7eddeef1137ce4c783b33494a071110b621fbb11a2"
+    },
+    {
+      "path": "calibration/ex05/PR-BODY.md",
+      "kind": "tree",
+      "sha256": "69f5ee503499824e60ccb2b5b5d5e085598f6639fa45b67242597d63ea61f43e"
+    },
+    {
+      "path": "calibration/ex05/cents.py",
+      "kind": "tree",
+      "sha256": "89cc9a6e281cec5f8b80197036e3bb2bd9e9a16b3b99e33e1309105f213ff8f6"
+    },
+    {
+      "path": "calibration/ex05/pytest.ini",
+      "kind": "tree",
+      "sha256": "3321eff9b8c8af07deb53f62c07d39f1df75383e1f3cd50ad7f7f309e0b604ce"
+    },
+    {
+      "path": "calibration/ex05/spec.adopted.md",
+      "kind": "tree",
+      "sha256": "1ae7e58bd736ec1269cfac1c01f1055178b8528f37bab35adcc19fd9e1693e85"
+    },
+    {
+      "path": "calibration/ex05/spec.md",
+      "kind": "tree",
+      "sha256": "1ae7e58bd736ec1269cfac1c01f1055178b8528f37bab35adcc19fd9e1693e85"
+    },
+    {
+      "path": "calibration/ex05/test_cents.py",
+      "kind": "tree",
+      "sha256": "f3df077f8ac9ac93c9d2e23ed2e392bad8dbab7a70a56c3575ed38b0a2bf3e78"
+    },
+    {
+      "path": "calibration/ex06/PR-BODY.md",
+      "kind": "tree",
+      "sha256": "af0c60b8b9de10098280da155d2616b96237009308e7a687c4f027f65714139f"
+    },
+    {
+      "path": "calibration/ex06/notes.py",
+      "kind": "tree",
+      "sha256": "6a232b9b437e1d46f8a7e229e817e3fe1f25644a480c1515a686dc9f0989946d"
+    },
+    {
+      "path": "calibration/ex06/pytest.ini",
+      "kind": "tree",
+      "sha256": "3321eff9b8c8af07deb53f62c07d39f1df75383e1f3cd50ad7f7f309e0b604ce"
+    },
+    {
+      "path": "calibration/ex06/spec.adopted.md",
+      "kind": "tree",
+      "sha256": "b2ee76ef16f87ed0ed9eecbc5c74dddd9ed65ac5362f026b8baef231c759fceb"
+    },
+    {
+      "path": "calibration/ex06/spec.md",
+      "kind": "tree",
+      "sha256": "56cb6fd96dc72ca702e9a24624d818271f83797be0105afc0930f5a074e31747"
+    },
+    {
+      "path": "calibration/ex06/test_notes.py",
+      "kind": "tree",
+      "sha256": "036e80aa7f58932127c41b8c8f75853e9c909cf2350ee8ee12452338ff6b9ae4"
+    },
+    {
+      "path": "calibration/ex07/PR-BODY.md",
+      "kind": "tree",
+      "sha256": "529665e9a0df0b023de7ff247cd172b3d10fc4aff3b7a367244474eed1e1a8a2"
+    },
+    {
+      "path": "calibration/ex07/digits.py",
+      "kind": "tree",
+      "sha256": "daa9b8dc1fb34f79b4c081900011a97a75c18f30d60a7717f5c2860375b018cc"
+    },
+    {
+      "path": "calibration/ex07/pytest.ini",
+      "kind": "tree",
+      "sha256": "3321eff9b8c8af07deb53f62c07d39f1df75383e1f3cd50ad7f7f309e0b604ce"
+    },
+    {
+      "path": "calibration/ex07/spec.adopted.md",
+      "kind": "tree",
+      "sha256": "ed6b0402037824ba07ec054b349ae259eb7d776f8bc5c56ea399471c6bb150b5"
+    },
+    {
+      "path": "calibration/ex07/spec.md",
+      "kind": "tree",
+      "sha256": "ed6b0402037824ba07ec054b349ae259eb7d776f8bc5c56ea399471c6bb150b5"
+    },
+    {
+      "path": "calibration/ex07/test_digits.py",
+      "kind": "tree",
+      "sha256": "7f26b3131f6e28956bdad62b32553599aa2eafcde8fe5ddf10410dd9a40d3851"
+    },
+    {
+      "path": "calibration/ex08/PR-BODY.md",
+      "kind": "tree",
+      "sha256": "fb05ecaf47e7bc8c74d8dcf5b55d20f4c401c9d6c277627511437bf4f30dd9ec"
+    },
+    {
+      "path": "calibration/ex08/luhn.py",
+      "kind": "tree",
+      "sha256": "6d16711e66772a9056b266ebdbc76765c1fbd1db1b5ee69d0753e320c32c6f4e"
+    },
+    {
+      "path": "calibration/ex08/pytest.ini",
+      "kind": "tree",
+      "sha256": "3321eff9b8c8af07deb53f62c07d39f1df75383e1f3cd50ad7f7f309e0b604ce"
+    },
+    {
+      "path": "calibration/ex08/spec.adopted.md",
+      "kind": "tree",
+      "sha256": "fa9d913c48f8ecfb193791c3d7d6f8cc37dffa7bfad540a606808b01ab7311eb"
+    },
+    {
+      "path": "calibration/ex08/spec.md",
+      "kind": "tree",
+      "sha256": "fa9d913c48f8ecfb193791c3d7d6f8cc37dffa7bfad540a606808b01ab7311eb"
+    },
+    {
+      "path": "calibration/ex08/test_luhn.py",
+      "kind": "tree",
+      "sha256": "c2dc2fd3bca96ea22d3deb8636633e411f65fc3d30ae28d8dbfd1577282bf65f"
+    },
+    {
+      "path": "calibration/ex09/PR-BODY.md",
+      "kind": "tree",
+      "sha256": "0d9aa185549d8fe148c49d72b25b0a67d934db7e01616dbc6570076defa072bf"
+    },
+    {
+      "path": "calibration/ex09/pytest.ini",
+      "kind": "tree",
+      "sha256": "3321eff9b8c8af07deb53f62c07d39f1df75383e1f3cd50ad7f7f309e0b604ce"
+    },
+    {
+      "path": "calibration/ex09/settings.py",
+      "kind": "tree",
+      "sha256": "45cb1c46f3913e76ab1c27bb5a1f37b20f53be14f7fb52e4368bca18d5887574"
+    },
+    {
+      "path": "calibration/ex09/spec.adopted.md",
+      "kind": "tree",
+      "sha256": "0c7a4cda8648c727f7e8439c36250ab1b1db9c5d886995e3cdda78ace24547da"
+    },
+    {
+      "path": "calibration/ex09/spec.md",
+      "kind": "tree",
+      "sha256": "0c7a4cda8648c727f7e8439c36250ab1b1db9c5d886995e3cdda78ace24547da"
+    },
+    {
+      "path": "calibration/ex09/test_settings.py",
+      "kind": "tree",
+      "sha256": "3e528e7c301f1fef845a6602d79eee5384643ceeee452172c334857c04f74124"
+    },
+    {
+      "path": "calibration/ex10/PR-BODY.md",
+      "kind": "tree",
+      "sha256": "8bb68449f5035dcfda9be28c71cc1452fc434282dc36c44eab3a59cf2852406d"
+    },
+    {
+      "path": "calibration/ex10/pytest.ini",
+      "kind": "tree",
+      "sha256": "3321eff9b8c8af07deb53f62c07d39f1df75383e1f3cd50ad7f7f309e0b604ce"
+    },
+    {
+      "path": "calibration/ex10/spec.adopted.md",
+      "kind": "tree",
+      "sha256": "81dfbf73483c939caf749d2eed73c9fd55d2d1c878060b7195a238a3afbc1636"
+    },
+    {
+      "path": "calibration/ex10/spec.md",
+      "kind": "tree",
+      "sha256": "81dfbf73483c939caf749d2eed73c9fd55d2d1c878060b7195a238a3afbc1636"
+    },
+    {
+      "path": "calibration/ex10/stats.py",
+      "kind": "tree",
+      "sha256": "edf01bddfe3601a30281d387285438c0e7baf8ef82d67b9809daedf079f1e651"
+    },
+    {
+      "path": "calibration/ex10/test_stats.py",
+      "kind": "tree",
+      "sha256": "4efaa7266eabae5cdaeea0502828f05fb75d181fa2f85cee71fcb354371a2c90"
+    },
+    {
+      "path": "calibration/ex11/PR-BODY.md",
+      "kind": "tree",
+      "sha256": "17e49af399bf57d654fd32afc850ace08b6d9ae93e467dbb129521c870d6e424"
+    },
+    {
+      "path": "calibration/ex11/pytest.ini",
+      "kind": "tree",
+      "sha256": "3321eff9b8c8af07deb53f62c07d39f1df75383e1f3cd50ad7f7f309e0b604ce"
+    },
+    {
+      "path": "calibration/ex11/quantity.py",
+      "kind": "tree",
+      "sha256": "dfa8f95c1f542f09dcbdd18ce7ee433864595cc46bee27acae47f33a70f3828b"
+    },
+    {
+      "path": "calibration/ex11/spec.adopted.md",
+      "kind": "tree",
+      "sha256": "110c0516b2586274263844469da2da62e72d445b55ae7f521cf707d08ccaab55"
+    },
+    {
+      "path": "calibration/ex11/spec.md",
+      "kind": "tree",
+      "sha256": "110c0516b2586274263844469da2da62e72d445b55ae7f521cf707d08ccaab55"
+    },
+    {
+      "path": "calibration/ex11/test_quantity.py",
+      "kind": "tree",
+      "sha256": "89ec032ac5a44981ab6acf5f15431b4dfd43d9b2b390f3d6f7313ba9c218647c"
+    },
+    {
+      "path": "private/denylist.example.txt",
+      "kind": "static",
+      "sha256": "6d241e49c655c0ef9c02431628b997bf9665bbc3e92de48dcda94700ad7927ee"
+    },
+    {
+      "path": "tools/scrub.py",
+      "kind": "copy",
+      "sha256": "bcc4e10805e7cdcb8e3925536bfbe09226a7e296a3d15fec2deb5b7d70c82b68"
+    },
+    {
+      "path": "tools/section.py",
+      "kind": "copy",
+      "sha256": "e8815980e08008ea1de0721b1f1d656f9d9fdb1251f8bb59b262c835b3d31c17"
+    }
+  ]
+}

@@ -62,17 +62,17 @@ def test_clean_folder_passes_with_one_summary_line(clean):
 
 
 @pytest.mark.req("REQ-051")
-@pytest.mark.parametrize("old,new,needle", [
-    ("Sonnet 5.5 / medium", "medium", "model"),
-    ("Sonnet 5.5 / high PR", "Sonnet 5.5 PR", "effort"),
-    ("Sonnet 5.5 / medium", "Sonnet 5.5 / maximum", "effort"),
-    ("Sonnet 5.5 / medium", "Sonnet 5.5 or Opus 5.5 / medium", "more than one model"),
+@pytest.mark.parametrize("old,new,needle,line", [
+    ("Sonnet 5.5 / medium", "medium", "model", 3),
+    ("Sonnet 5.5 / high PR", "Sonnet 5.5 PR", "effort", 5),
+    ("Sonnet 5.5 / medium", "Sonnet 5.5 / maximum", "effort", 3),
+    ("Sonnet 5.5 / medium", "Sonnet 5.5 or Opus 5.5 / medium", "more than one model", 3),
 ], ids=["no-model", "no-effort", "bad-effort", "two-models"])
-def test_session_line_defects_fail_naming_file_and_line(tmp_path, old, new, needle):
+def test_session_line_defects_fail_naming_file_and_line(tmp_path, old, new, needle, line):
     folder = make(tmp_path, sessions=SESSIONS.replace(old, new, 1))
     r = check(folder)
     assert r.returncode == 1, r.stdout
-    assert "builds/00-example/SESSIONS.md:3" in r.stdout
+    assert f"builds/00-example/SESSIONS.md:{line}:" in r.stdout
     assert needle in r.stdout
 
 

@@ -1,3 +1,3 @@
 #!/usr/bin/env python3
-# kit script literal_overlap. Mentions adafixture on purpose: no replacement may touch a .py under a skills tree.
+# kit script literal_overlap
 print("literal_overlap")

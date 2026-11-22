@@ -1,0 +1,7 @@
+# Portfolio programme: how Claude works in this folder
+## Identities
+## The `continue` procedure
+## Hard rules
+## Context and tool output
+## Model advice
+## Public writing style

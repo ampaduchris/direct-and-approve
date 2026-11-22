@@ -564,8 +564,9 @@ INVENTED = ("Mara Example", "example-project", "example-colleague", "example-cli
 
 @pytest.mark.req("REQ-080")
 def test_no_denylist_file_is_in_the_tree_and_the_example_list_is_invented():
-    names = [p.name for p in ROOT.rglob("denylist*.txt") if ".venv" not in p.parts and "tests" not in p.parts]
-    assert sorted(names) == ["denylist.example.txt"]
-    entries = [l.strip() for l in (ROOT / "static/private/denylist.example.txt").read_text().splitlines()
-               if l.strip() and not l.startswith("#")]
-    assert entries and all(e in INVENTED for e in entries), entries
+    found = {p.relative_to(ROOT).as_posix() for p in ROOT.rglob("denylist*.txt")
+             if ".venv" not in p.parts and "fixtures" not in p.parts}
+    assert found == {"static/private/denylist.example.txt", "method/private/denylist.example.txt"}
+    for rel in sorted(found):
+        entries = [l.strip() for l in (ROOT / rel).read_text().splitlines() if l.strip() and not l.startswith("#")]
+        assert entries and all(e in INVENTED for e in entries), (rel, entries)

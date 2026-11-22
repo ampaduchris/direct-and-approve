@@ -1,0 +1,506 @@
+$ cd ex01 && python req_run.py --spec spec.md --tests .
+pytest: 2 passed in 0.01s
+requirement level     tagged  ran pass skip xfail fail asserts  flags
+REQ-001    MUST           2    2    2    0     0    0       4  -
+REQ-002    MUST           1    1    1    0     0    0       3  -
+MUST and MUST NOT: 2; clean: 2; flagged: 0
+[exit 0]
+
+$ cd ex01 && python mutate_check.py redact.py:redact --req REQ-001,REQ-002
+target:   redact.py:redact
+baseline: 2 passed in 0.01s (exit 0, tests tagged REQ-001,REQ-002)
+gut     killed    1 failed in 0.01s (exit 1)
+raise   killed    1 failed in 0.01s (exit 1)
+flip    SURVIVED  2 passed in 0.01s
+restored: file hash matches the original
+result:   1 survived
+[exit 1]
+
+$ cd ex01 && python spec_diff.py --then spec.adopted.md --now spec.md --deviations PR-BODY.md
+== spec.adopted.md -> spec.md
+requirement rows changed after adoption: 0; without a deviation entry: 0
+[exit 0]
+
+$ cd ex01 && python tier_check.py PR-BODY.md --rerun --offline
+   rerun V1: `python -c "import redact"` -> exit 0: (no output)
+V1  PASS         ok
+   rerun V2: `python -m pytest -q -k report` -> exit 0: 1 passed, 1 deselected in 0.01s
+V2  PASS         ok
+V3  NOT VERIFIED ok
+   rerun V4: no single command in backticks, nothing rerun
+V4  PASS         ok
+   rerun V5: `python -m pytest -q` -> exit 0: 2 passed in 0.01s
+V5  PASS         ok
+   rerun V6: no single command in backticks, nothing rerun
+V6  PASS         ok
+Not verified: 2 item(s) listed; 1 row(s) marked NOT VERIFIED
+tier table: 0 error(s), 0 warning(s)
+[exit 0]
+
+$ cd ex01 && python literal_overlap.py --src . --tests test_redact.py
+literal overlap: 0 place(s) to look in 1 source file(s)
+[exit 0]
+
+$ cd ex02 && python req_run.py --spec spec.md --tests .
+pytest: 2 passed, 1 xfailed in 0.02s
+requirement level     tagged  ran pass skip xfail fail asserts  flags
+REQ-001    MUST           1    1    1    0     0    0       1  -
+REQ-002    MUST           1    1    0    0     1    0       0  XFAIL NO-PASSING-TEST
+    xfailed: test_days.py::test_impossible_day_rejected (calendar edge cases are handled in a later change)
+REQ-003    MUST           1    1    1    0     0    0       0  -
+MUST and MUST NOT: 3; clean: 2; flagged: 1
+[exit 1]
+
+$ cd ex02 && python mutate_check.py days.py:parse_day --req REQ-002
+target:   days.py:parse_day
+baseline: 2 deselected, 1 xfailed in 0.01s (exit 0, tests tagged REQ-002)
+gut     SURVIVED  2 deselected, 1 xfailed in 0.01s
+raise   SURVIVED  2 deselected, 1 xfailed in 0.01s
+flip    SURVIVED  2 deselected, 1 xpassed in 0.00s
+restored: file hash matches the original
+result:   3 survived
+[exit 1]
+
+$ cd ex02 && python spec_diff.py --then spec.adopted.md --now spec.md --deviations PR-BODY.md
+== spec.adopted.md -> spec.md
+requirement rows changed after adoption: 0; without a deviation entry: 0
+[exit 0]
+
+$ cd ex02 && python tier_check.py PR-BODY.md --rerun --offline
+   rerun V1: `python -c "import days"` -> exit 0: (no output)
+V1  PASS         ok
+   rerun V2: `python -m pytest -q -k parse_day` -> exit 0: 1 passed, 2 deselected in 0.00s
+V2  PASS         ok
+   rerun V3: `python -m pytest -q -k month` -> exit 0: 1 passed, 2 deselected in 0.00s
+V3  PASS         ok
+   rerun V4: no single command in backticks, nothing rerun
+V4  PASS         ok
+   rerun V5: `python -m pytest -q` -> exit 0: 2 passed, 1 xfailed in 0.01s
+V5  PASS         ok
+   rerun V6: no single command in backticks, nothing rerun
+V6  PASS         ok
+Not verified: 1 item(s) listed; 0 row(s) marked NOT VERIFIED
+warning  V5: PASS-WITH-SKIPS (1 xfailed); name each one under Not verified
+tier table: 0 error(s), 1 warning(s)
+[exit 0]
+
+$ cd ex02 && python literal_overlap.py --src . --tests test_days.py
+literal overlap: 0 place(s) to look in 1 source file(s)
+[exit 0]
+
+$ cd ex02 && python -c 'from days import parse_day; print(parse_day("2026-02-30"))'
+(2026, 2, 30)
+
+$ cd ex03 && python req_run.py --spec spec.md --tests .
+pytest: 2 passed in 0.08s
+requirement level     tagged  ran pass skip xfail fail asserts  flags
+REQ-001    MUST           1    1    1    0     0    0       1  -
+REQ-002    MUST           1    1    1    0     0    0       1  -
+MUST and MUST NOT: 2; clean: 2; flagged: 0
+[exit 0]
+
+$ cd ex03 && python mutate_check.py vat.py:gross_cents --req REQ-001
+target:   vat.py:gross_cents
+baseline: 1 passed, 1 deselected in 0.07s (exit 0, tests tagged REQ-001)
+gut     SURVIVED  1 passed, 1 deselected in 0.07s
+raise   SURVIVED  1 passed, 1 deselected in 0.18s
+flip    SURVIVED  1 passed, 1 deselected in 0.08s
+restored: file hash matches the original
+result:   3 survived
+[exit 1]
+
+$ cd ex03 && python spec_diff.py --then spec.adopted.md --now spec.md --deviations PR-BODY.md
+== spec.adopted.md -> spec.md
+requirement rows changed after adoption: 0; without a deviation entry: 0
+[exit 0]
+
+$ cd ex03 && python tier_check.py PR-BODY.md --rerun --offline
+   rerun V1: `python -c "import vat"` -> exit 0: (no output)
+V1  PASS         ok
+   rerun V2: `python -m pytest -q -k gross` -> exit 0: 1 passed, 1 deselected in 0.03s
+V2  PASS         ok
+V3  NOT VERIFIED ok
+   rerun V4: no single command in backticks, nothing rerun
+V4  PASS         ok
+   rerun V5: `python -m pytest -q` -> exit 0: 2 passed in 0.03s
+V5  PASS         ok
+   rerun V6: no single command in backticks, nothing rerun
+V6  PASS         ok
+Not verified: 2 item(s) listed; 1 row(s) marked NOT VERIFIED
+tier table: 0 error(s), 0 warning(s)
+[exit 0]
+
+$ cd ex03 && python literal_overlap.py --src . --tests test_vat.py
+literal overlap: 0 place(s) to look in 1 source file(s)
+[exit 0]
+
+$ cd ex04 && python req_run.py --spec spec.md --tests .
+pytest: 4 passed in 0.01s
+requirement level     tagged  ran pass skip xfail fail asserts  flags
+REQ-001    MUST           1    3    3    0     0    0       3  -
+REQ-002    MUST           1    1    1    0     0    0       0  -
+MUST and MUST NOT: 2; clean: 2; flagged: 0
+[exit 0]
+
+$ cd ex04 && python mutate_check.py cards.py:mask_card
+target:   cards.py:mask_card
+baseline: 4 passed in 0.00s (exit 0, tests)
+gut     killed    1 failed in 0.01s (exit 1)
+raise   killed    1 failed in 0.01s (exit 1)
+flip    killed    1 failed in 0.01s (exit 1)
+restored: file hash matches the original
+result:   all probes killed
+[exit 0]
+
+$ cd ex04 && python spec_diff.py --then spec.adopted.md --now spec.md --deviations PR-BODY.md
+== spec.adopted.md -> spec.md
+requirement rows changed after adoption: 0; without a deviation entry: 0
+[exit 0]
+
+$ cd ex04 && python tier_check.py PR-BODY.md --rerun --offline
+   rerun V1: `python -c "import cards"` -> exit 0: (no output)
+V1  PASS         ok
+   rerun V2: `python -m pytest -q -k masked` -> exit 0: 3 passed, 1 deselected in 0.01s
+V2  PASS         ok
+   rerun V3: `python -m pytest -q -k rejected` -> exit 0: 1 passed, 3 deselected in 0.00s
+V3  PASS         ok
+   rerun V4: no single command in backticks, nothing rerun
+V4  PASS         ok
+   rerun V5: `python -m pytest -q` -> exit 0: 4 passed in 0.01s
+V5  PASS         ok
+   rerun V6: no single command in backticks, nothing rerun
+V6  PASS         ok
+Not verified: 1 item(s) listed; 0 row(s) marked NOT VERIFIED
+tier table: 0 error(s), 0 warning(s)
+[exit 0]
+
+$ cd ex04 && python literal_overlap.py --src . --tests test_cards.py
+literal overlap: 0 place(s) to look in 1 source file(s)
+[exit 0]
+
+$ cd ex05 && python req_run.py --spec spec.md --tests .
+pytest: 2 passed in 0.01s
+requirement level     tagged  ran pass skip xfail fail asserts  flags
+REQ-001    MUST           1    0    0    0     0    0       0  NOT-COLLECTED NO-PASSING-TEST
+    never ran: test_cents.py::test_to_cents (line 6)
+REQ-002    MUST           1    1    1    0     0    0       0  -
+REQ-003    MUST           1    1    1    0     0    0       1  -
+MUST and MUST NOT: 3; clean: 2; flagged: 1
+[exit 1]
+
+$ cd ex05 && python mutate_check.py cents.py:to_cents --req REQ-001
+target:   cents.py:to_cents
+baseline: 2 deselected in 0.00s (exit 5, tests tagged REQ-001)
+NO TESTS SELECTED: nothing runs against this code, so nothing can prove it
+[exit 2]
+
+$ cd ex05 && python spec_diff.py --then spec.adopted.md --now spec.md --deviations PR-BODY.md
+== spec.adopted.md -> spec.md
+requirement rows changed after adoption: 0; without a deviation entry: 0
+[exit 0]
+
+$ cd ex05 && python tier_check.py PR-BODY.md --rerun --offline
+   rerun V1: `python -c "import cents"` -> exit 0: (no output)
+V1  PASS         ok
+   rerun V2: `python -m pytest -q -k to_cents` -> exit 0: 1 passed, 1 deselected in 0.01s
+V2  PASS         ok
+   rerun V3: `python -m pytest -q -k rejected` -> exit 0: 1 passed, 1 deselected in 0.01s
+V3  PASS         ok
+   rerun V4: no single command in backticks, nothing rerun
+V4  PASS         ok
+   rerun V5: `python -m pytest -q` -> exit 0: 2 passed in 0.01s
+V5  PASS         ok
+   rerun V6: no single command in backticks, nothing rerun
+V6  PASS         ok
+Not verified: 1 item(s) listed; 0 row(s) marked NOT VERIFIED
+tier table: 0 error(s), 0 warning(s)
+[exit 0]
+
+$ cd ex05 && python literal_overlap.py --src . --tests test_cents.py
+literal overlap: 0 place(s) to look in 1 source file(s)
+[exit 0]
+
+$ cd ex05 && python -c 'from cents import to_cents; print(to_cents("12.5"))'
+1205
+
+$ cd ex06 && python req_run.py --spec spec.md --tests .
+pytest: 2 passed in 0.01s
+requirement level     tagged  ran pass skip xfail fail asserts  flags
+REQ-001    MUST           1    1    1    0     0    0       2  -
+REQ-002    MUST           1    1    1    0     0    0       1  -
+MUST and MUST NOT: 2; clean: 2; flagged: 0
+[exit 0]
+
+$ cd ex06 && python mutate_check.py notes.py:shorten --req REQ-001
+target:   notes.py:shorten
+baseline: 1 passed, 1 deselected in 0.00s (exit 0, tests tagged REQ-001)
+gut     killed    1 failed, 1 deselected in 0.01s (exit 1)
+raise   killed    1 failed, 1 deselected in 0.01s (exit 1)
+flip    killed    1 failed, 1 deselected in 0.01s (exit 1)
+restored: file hash matches the original
+result:   all probes killed
+[exit 0]
+
+$ cd ex06 && python spec_diff.py --then spec.adopted.md --now spec.md --deviations PR-BODY.md
+== spec.adopted.md -> spec.md
+REQ-001  TEXT-CHANGED NO-DEVIATION
+   - MUST | `shorten(note)` returns at most 80 characters. A longer note is cut at the last space at or before character 80, never inside a word. | `test_long_note_cut`
+   + MUST | `shorten(note)` returns at most 80 characters. A longer note is cut at character 80. | `test_long_note_cut`
+requirement rows changed after adoption: 1; without a deviation entry: 1
+[exit 1]
+
+$ cd ex06 && python tier_check.py PR-BODY.md --rerun --offline
+   rerun V1: `python -c "import notes"` -> exit 0: (no output)
+V1  PASS         ok
+   rerun V2: `python -m pytest -q -k cut` -> exit 0: 1 passed, 1 deselected in 0.01s
+V2  PASS         ok
+V3  NOT VERIFIED ok
+   rerun V4: no single command in backticks, nothing rerun
+V4  PASS         ok
+   rerun V5: `python -m pytest -q` -> exit 0: 2 passed in 0.01s
+V5  PASS         ok
+   rerun V6: no single command in backticks, nothing rerun
+V6  PASS         ok
+Not verified: 2 item(s) listed; 1 row(s) marked NOT VERIFIED
+tier table: 0 error(s), 0 warning(s)
+[exit 0]
+
+$ cd ex06 && python literal_overlap.py --src . --tests test_notes.py
+literal overlap: 0 place(s) to look in 1 source file(s)
+[exit 0]
+
+$ cd ex07 && python req_run.py --spec spec.md --tests .
+pytest: 2 passed in 0.01s
+requirement level     tagged  ran pass skip xfail fail asserts  flags
+REQ-001    MUST           1    1    1    0     0    0       0  ZERO-ASSERT
+    passed with 0 asserts executed (1 written): test_digits.py::test_no_digit_survives (line 17)
+REQ-002    MUST           1    1    1    0     0    0       1  -
+MUST and MUST NOT: 2; clean: 1; flagged: 1
+[exit 1]
+
+$ cd ex07 && python mutate_check.py digits.py:hide_digits --req REQ-001
+target:   digits.py:hide_digits
+baseline: 1 passed, 1 deselected in 0.00s (exit 0, tests tagged REQ-001)
+gut     SURVIVED  1 passed, 1 deselected in 0.00s
+raise   SURVIVED  1 passed, 1 deselected in 0.00s
+flip    n/a       nothing in this function for the probe to change
+restored: file hash matches the original
+result:   2 survived
+[exit 1]
+
+$ cd ex07 && python spec_diff.py --then spec.adopted.md --now spec.md --deviations PR-BODY.md
+== spec.adopted.md -> spec.md
+requirement rows changed after adoption: 0; without a deviation entry: 0
+[exit 0]
+
+$ cd ex07 && python tier_check.py PR-BODY.md --rerun --offline
+   rerun V1: `python -c "import digits"` -> exit 0: (no output)
+V1  PASS         ok
+   rerun V2: `python -m pytest -q -k survives` -> exit 0: 1 passed, 1 deselected in 0.00s
+V2  PASS         ok
+V3  NOT VERIFIED ok
+   rerun V4: no single command in backticks, nothing rerun
+V4  PASS         ok
+   rerun V5: `python -m pytest -q` -> exit 0: 2 passed in 0.01s
+V5  PASS         ok
+   rerun V6: no single command in backticks, nothing rerun
+V6  PASS         ok
+Not verified: 2 item(s) listed; 1 row(s) marked NOT VERIFIED
+tier table: 0 error(s), 0 warning(s)
+[exit 0]
+
+$ cd ex07 && python literal_overlap.py --src . --tests test_digits.py
+literal overlap: 0 place(s) to look in 1 source file(s)
+[exit 0]
+
+$ cd ex07 && python -c 'from digits import hide_digits; print(hide_digits("Card 4111 1111 1111 111"))'
+Card #### #### #### 111
+
+$ cd ex08 && python req_run.py --spec spec.md --tests .
+pytest: 4 passed in 0.01s
+requirement level     tagged  ran pass skip xfail fail asserts  flags
+REQ-001    MUST           1    3    3    0     0    0       3  -
+REQ-002    MUST           1    1    1    0     0    0       2  -
+MUST and MUST NOT: 2; clean: 2; flagged: 0
+[exit 0]
+
+$ cd ex08 && python mutate_check.py luhn.py:luhn_ok --req REQ-001
+target:   luhn.py:luhn_ok
+baseline: 3 passed, 1 deselected in 0.01s (exit 0, tests tagged REQ-001)
+gut     killed    1 failed, 1 deselected in 0.01s (exit 1)
+raise   killed    1 failed, 1 deselected in 0.01s (exit 1)
+flip    killed    1 failed, 1 passed, 1 deselected in 0.01s (exit 1)
+restored: file hash matches the original
+result:   all probes killed
+[exit 0]
+
+$ cd ex08 && python spec_diff.py --then spec.adopted.md --now spec.md --deviations PR-BODY.md
+== spec.adopted.md -> spec.md
+requirement rows changed after adoption: 0; without a deviation entry: 0
+[exit 0]
+
+$ cd ex08 && python tier_check.py PR-BODY.md --rerun --offline
+   rerun V1: `python -c "import luhn"` -> exit 0: (no output)
+V1  PASS         ok
+   rerun V2: `python -m pytest -q -k checksum` -> exit 0: 3 passed, 1 deselected in 0.01s
+V2  PASS         ok
+   rerun V3: `python -m pytest -q -k rejected` -> exit 0: 1 passed, 3 deselected in 0.01s
+V3  PASS         ok
+   rerun V4: no single command in backticks, nothing rerun
+V4  PASS         ok
+   rerun V5: `python -m pytest -q` -> exit 0: 4 passed in 0.01s
+V5  PASS         ok
+   rerun V6: no single command in backticks, nothing rerun
+V6  PASS         ok
+Not verified: 1 item(s) listed; 0 row(s) marked NOT VERIFIED
+tier table: 0 error(s), 0 warning(s)
+[exit 0]
+
+$ cd ex08 && python literal_overlap.py --src . --tests test_luhn.py
+OVERLAP     '79927398713'  luhn.py:3  and  test_luhn.py:8
+OVERLAP     '79927398710'  luhn.py:4  and  test_luhn.py:9
+OVERLAP     '4539578763621486'  luhn.py:5  and  test_luhn.py:10
+literal overlap: 3 place(s) to look in 1 source file(s)
+[exit 1]
+
+$ cd ex08 && python -c 'from luhn import luhn_ok; print(luhn_ok("4111111111111111"))'
+False
+
+$ cd ex09 && python req_run.py --spec spec.md --tests .
+pytest: 2 passed in 0.00s
+requirement level     tagged  ran pass skip xfail fail asserts  flags
+REQ-001    MUST           1    1    1    0     0    0       0  ZERO-ASSERT
+    passed with 0 asserts executed (0 written): test_settings.py::test_keys_and_values_read (line 6)
+REQ-002    MUST           1    1    1    0     0    0       0  -
+MUST and MUST NOT: 2; clean: 1; flagged: 1
+[exit 1]
+
+$ cd ex09 && python mutate_check.py settings.py:load_settings --req REQ-001
+target:   settings.py:load_settings
+baseline: 1 passed, 1 deselected in 0.00s (exit 0, tests tagged REQ-001)
+gut     SURVIVED  1 passed, 1 deselected in 0.00s
+raise   killed    1 failed, 1 deselected in 0.01s (exit 1)
+flip    killed    1 failed, 1 deselected in 0.01s (exit 1)
+restored: file hash matches the original
+result:   1 survived
+[exit 1]
+
+$ cd ex09 && python spec_diff.py --then spec.adopted.md --now spec.md --deviations PR-BODY.md
+== spec.adopted.md -> spec.md
+requirement rows changed after adoption: 0; without a deviation entry: 0
+[exit 0]
+
+$ cd ex09 && python tier_check.py PR-BODY.md --rerun --offline
+   rerun V1: `python -c "import settings"` -> exit 0: (no output)
+V1  PASS         ok
+   rerun V2: `python -m pytest -q -k read` -> exit 0: 1 passed, 1 deselected in 0.00s
+V2  PASS         ok
+   rerun V3: `python -m pytest -q -k bad_line` -> exit 0: 1 passed, 1 deselected in 0.01s
+V3  PASS         ok
+   rerun V4: no single command in backticks, nothing rerun
+V4  PASS         ok
+   rerun V5: `python -m pytest -q` -> exit 0: 2 passed in 0.00s
+V5  PASS         ok
+   rerun V6: no single command in backticks, nothing rerun
+V6  PASS         ok
+Not verified: 1 item(s) listed; 0 row(s) marked NOT VERIFIED
+tier table: 0 error(s), 0 warning(s)
+[exit 0]
+
+$ cd ex09 && python literal_overlap.py --src . --tests test_settings.py
+literal overlap: 0 place(s) to look in 1 source file(s)
+[exit 0]
+
+$ cd ex10 && python req_run.py --spec spec.md --tests .
+pytest: 1 failed, 2 passed in 0.01s
+requirement level     tagged  ran pass skip xfail fail asserts  flags
+REQ-001    MUST           1    1    1    0     0    0       1  -
+REQ-002    MUST           1    1    0    0     0    1       0  FAILED NO-PASSING-TEST
+    failed: test_stats.py::test_even_count
+REQ-003    MUST           1    1    1    0     0    0       0  -
+MUST and MUST NOT: 3; clean: 2; flagged: 1
+[exit 1]
+
+$ cd ex10 && python mutate_check.py stats.py:median --req REQ-002
+target:   stats.py:median
+baseline: 1 failed, 2 deselected in 0.01s (exit 1, tests tagged REQ-002)
+baseline is not green; fix that first
+[exit 2]
+
+$ cd ex10 && python spec_diff.py --then spec.adopted.md --now spec.md --deviations PR-BODY.md
+== spec.adopted.md -> spec.md
+requirement rows changed after adoption: 0; without a deviation entry: 0
+[exit 0]
+
+$ cd ex10 && python tier_check.py PR-BODY.md --rerun --offline
+   rerun V1: `python -c "import stats"` -> exit 0: (no output)
+V1  PASS         ok
+   rerun V2: `python -m pytest -q -k count` -> exit 1: 1 failed, 1 passed, 1 deselected in 0.01s
+V2  PASS         RERUN-FAILED EVIDENCE-MISMATCH(claimed 2 passed, now 1)
+   rerun V3: `python -m pytest -q -k empty` -> exit 0: 1 passed, 2 deselected in 0.01s
+V3  PASS         ok
+   rerun V4: no single command in backticks, nothing rerun
+V4  PASS         ok
+   rerun V5: `python -m pytest -q` -> exit 1: 1 failed, 2 passed in 0.01s
+V5  PASS         RERUN-FAILED EVIDENCE-MISMATCH(claimed 3 passed, now 2)
+   rerun V6: no single command in backticks, nothing rerun
+V6  PASS         ok
+Not verified: 1 item(s) listed; 0 row(s) marked NOT VERIFIED
+ERROR    V2: RERUN-FAILED
+ERROR    V2: EVIDENCE-MISMATCH(claimed 2 passed, now 1)
+ERROR    V5: RERUN-FAILED
+ERROR    V5: EVIDENCE-MISMATCH(claimed 3 passed, now 2)
+tier table: 4 error(s), 0 warning(s)
+[exit 1]
+
+$ cd ex10 && python literal_overlap.py --src . --tests test_stats.py
+literal overlap: 0 place(s) to look in 1 source file(s)
+[exit 0]
+
+$ cd ex11 && python req_run.py --spec spec.md --tests .
+pytest: 2 passed in 0.00s
+requirement level     tagged  ran pass skip xfail fail asserts  flags
+REQ-001    MUST           1    1    1    0     0    0       1  -
+REQ-002    MUST           1    1    1    0     0    0       0  BROAD-RAISES
+    accepts any exception: test_quantity.py::test_zero_and_negative_rejected (line 11)
+MUST and MUST NOT: 2; clean: 1; flagged: 1
+[exit 1]
+
+$ cd ex11 && python mutate_check.py quantity.py:parse_quantity --req REQ-002
+target:   quantity.py:parse_quantity
+baseline: 1 passed, 1 deselected in 0.00s (exit 0, tests tagged REQ-002)
+gut     killed    1 failed, 1 deselected in 0.01s (exit 1)
+raise   SURVIVED  1 passed, 1 deselected in 0.00s
+flip    n/a       nothing in this function for the probe to change
+restored: file hash matches the original
+result:   1 survived
+[exit 1]
+
+$ cd ex11 && python spec_diff.py --then spec.adopted.md --now spec.md --deviations PR-BODY.md
+== spec.adopted.md -> spec.md
+requirement rows changed after adoption: 0; without a deviation entry: 0
+[exit 0]
+
+$ cd ex11 && python tier_check.py PR-BODY.md --rerun --offline
+   rerun V1: `python -c "import quantity"` -> exit 0: (no output)
+V1  PASS         ok
+   rerun V2: `python -m pytest -q -k read` -> exit 0: 1 passed, 1 deselected in 0.00s
+V2  PASS         ok
+   rerun V3: `python -m pytest -q -k rejected` -> exit 0: 1 passed, 1 deselected in 0.00s
+V3  PASS         ok
+   rerun V4: no single command in backticks, nothing rerun
+V4  PASS         ok
+   rerun V5: `python -m pytest -q` -> exit 0: 2 passed in 0.00s
+V5  PASS         ok
+   rerun V6: no single command in backticks, nothing rerun
+V6  PASS         ok
+Not verified: 1 item(s) listed; 0 row(s) marked NOT VERIFIED
+tier table: 0 error(s), 0 warning(s)
+[exit 0]
+
+$ cd ex11 && python literal_overlap.py --src . --tests test_quantity.py
+literal overlap: 0 place(s) to look in 1 source file(s)
+[exit 0]
+
+$ cd ex11 && python -c 'from quantity import parse_quantity; print(parse_quantity("-3"))'
+-3
