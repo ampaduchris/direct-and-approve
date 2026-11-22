@@ -35,6 +35,62 @@ jobs:
       # Session 9.5 removes --report-only so that an untested MUST fails CI (DEV-001).
       - name: Requirement traceability
         run: uv run --locked python scripts/trace.py --report-only
+      - name: Manifest check
+        run: uv run --locked python scripts/extract.py --repo . --verify-manifest
+      - name: Privacy boundary
+        run: uv run --locked python scripts/boundary.py
+      - name: Scrubber self-test and example-list scan
+        run: uv run --locked python scripts/ci_checks.py scrub
+
+  kit:
+    needs: test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: "3.12"
+      - name: Install from the lockfile
+        run: uv sync --locked
+      - name: Calibration proof
+        run: uv run --locked python scripts/ci_checks.py kit
+
+  start-your-own:
+    needs: test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: "3.12"
+      - name: Install from the lockfile
+        run: uv sync --locked
+      - name: Copy method/ outside the repository and run its checks
+        run: uv run --locked python scripts/ci_checks.py start-your-own
+
+  documents:
+    needs: test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: "3.12"
+      - name: Install from the lockfile
+        run: uv sync --locked
+      - name: Blocks marked bash run
+        run: uv run --locked python scripts/run_blocks.py
+      - name: Offline link check
+        run: uv run --locked python scripts/check_links.py
 
   gitleaks:
     runs-on: ubuntu-24.04

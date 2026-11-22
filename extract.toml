@@ -145,17 +145,17 @@ replace_in = ["**/*.md", "**/*.py", "**/*.txt"]
 
 # ---- Static files written for the public ----------------------------------------------------------
 
-# Added in session 9.3 (DEV-007): static/SETUP.md is written for the public then.
-# [[entry]]
-# kind = "static"
-# source = "static/SETUP.md"
-# target = "method/SETUP.md"
+# Restored in session 9.3 (DEV-007): static/SETUP.md is written for the public.
+[[entry]]
+kind = "static"
+source = "static/SETUP.md"
+target = "method/SETUP.md"
 
-# Added in session 9.3 (DEV-007): static/FRONTLOAD.md is written for the public then.
-# [[entry]]
-# kind = "static"
-# source = "static/FRONTLOAD.md"
-# target = "method/FRONTLOAD.md"
+# Restored in session 9.3 (DEV-007): static/FRONTLOAD.md is written for the public.
+[[entry]]
+kind = "static"
+source = "static/FRONTLOAD.md"
+target = "method/FRONTLOAD.md"
 
 [[entry]]
 kind = "static"

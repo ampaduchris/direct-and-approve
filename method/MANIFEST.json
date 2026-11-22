@@ -48,9 +48,19 @@
       "sha256": "bfb201161b152bf8dd33904e4db6dd8bcb4563257c41f5a4a2eec4ac270c07df"
     },
     {
+      "path": "FRONTLOAD.md",
+      "kind": "static",
+      "sha256": "809f4a75f9b4aa695ddf0477272a474ecebcb7d2d4469783775937eb3f821313"
+    },
+    {
       "path": "PLAN.md",
       "kind": "static",
       "sha256": "3bde002b130c85d7f268a455383c7147ed72d7288756651f06b45ff1099a7fcc"
+    },
+    {
+      "path": "SETUP.md",
+      "kind": "static",
+      "sha256": "e3f448c9925d8d014974a5e200a8c40f9f1558a4459bb8b0345cd4af8cada0f3"
     },
     {
       "path": "STANDARD.md",
