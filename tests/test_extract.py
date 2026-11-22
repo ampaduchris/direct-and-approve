@@ -229,6 +229,51 @@ def test_a_refused_first_run_creates_no_output_and_no_temporary_folder(fx):
     assert [p.name for p in fx.repo.iterdir() if p.name.startswith(".")] == []
 
 
+@pytest.mark.req("REQ-034")
+def test_a_successful_first_run_writes_the_output_and_leaves_no_temporary_folder(fx):
+    assert fx.extract().returncode == 0
+    assert (fx.out / "MANIFEST.json").is_file() and (fx.out / "CLAUDE.md").is_file()
+    assert [p.name for p in fx.repo.iterdir() if p.name.startswith(".extract")] == []
+
+
+@pytest.mark.req("REQ-034")
+def test_a_failure_while_the_temporary_folder_is_written_leaves_the_old_output_and_no_leftover(tmp_path):
+    import extract
+
+    out = tmp_path / "method"
+    out.mkdir()
+    (out / "kept.txt").write_text("old output\n")
+    before = tree_hash(out)
+    with pytest.raises(OSError):
+        # "a" is written as a file, then "a/b" needs "a" to be a folder.
+        extract.write_out({"a": b"1", "a/b": b"2"}, out)
+    assert tree_hash(out) == before
+    assert [p.name for p in tmp_path.iterdir()] == ["method"]
+
+
+@pytest.mark.req("REQ-034")
+def test_a_failure_while_the_new_output_is_moved_into_place_puts_the_old_output_back(tmp_path, monkeypatch):
+    import extract
+
+    out = tmp_path / "method"
+    out.mkdir()
+    (out / "kept.txt").write_text("old output\n")
+    before = tree_hash(out)
+    real_rename = Path.rename
+
+    def failing_rename(self, target):
+        if self.name.startswith(".extract-") and not self.name.startswith(".extract-old-"):
+            raise OSError("planted failure while moving the new output into place")
+        return real_rename(self, target)
+
+    monkeypatch.setattr(Path, "rename", failing_rename)
+    with pytest.raises(OSError, match="planted"):
+        extract.write_out({"new.txt": b"new output\n"}, out)
+    monkeypatch.undo()
+    assert tree_hash(out) == before
+    assert [p.name for p in tmp_path.iterdir()] == ["method"]
+
+
 FORBIDDEN_CASES = {
     "unix home": "path /Users/someone/x",
     "linux home": "path /home/someone/x",

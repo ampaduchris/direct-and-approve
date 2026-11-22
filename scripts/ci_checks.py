@@ -25,8 +25,6 @@ SKIP = {".git", ".venv", ".pytest_cache", ".hypothesis", "__pycache__", "mutants
 # They are the only paths the example-list scan leaves out, so that the scan can print CLEAN on
 # everything else. DEV-012.
 SCAN_SKIP = ("tests", "method/private/denylist.example.txt", "static/private/denylist.example.txt")
-# prove.py writes its transcript here, with timings, so the file differs on every run. DEV-011.
-PROOF_TRANSCRIPT = "method/calibration/_answers/PROOF.txt"
 
 
 def step(label: str, cmd: list[str], *, cwd: Path, env: dict | None = None) -> bool:
@@ -41,7 +39,7 @@ def step(label: str, cmd: list[str], *, cwd: Path, env: dict | None = None) -> b
 def kit() -> int:
     env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1", "PYTEST_ADDOPTS": "-p no:cacheprovider"}
     ok = step("calibration proof", [sys.executable, str(METHOD / "calibration/_answers/prove.py")], cwd=ROOT, env=env)
-    spec = ["--", "method/calibration", f":(exclude){PROOF_TRANSCRIPT}"]
+    spec = ["--", "method/calibration"]
     changed = subprocess.run(["git", "status", "--porcelain", "--untracked-files=all", *spec],
                              cwd=ROOT, capture_output=True, text=True).stdout.strip()
     print(f"{'ok  ' if not changed else 'FAIL'} no example file changed by the run: {changed or 'git status is empty'}")

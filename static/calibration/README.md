@@ -16,7 +16,7 @@ Eleven tiny synthetic Python projects, `ex01` to `ex11`. Ten carry one planted d
 
 ## Prove that every planted defect is exposed
 
-`_answers/prove.py` runs the kit scripts on all eleven examples, checks that each planted defect is exposed by its command and that the control is clean, and writes `_answers/PROOF.txt`. From the root of the control folder (the folder that holds `.claude/` and `calibration/`):
+`_answers/prove.py` runs the kit scripts on all eleven examples, checks that each planted defect is exposed by its command and that the control is clean, and writes its transcript to `PROOF.txt` in the system temporary folder. The `_answers/PROOF.txt` in this folder is the transcript of one earlier run. The proof leaves no cache and no bytecode in this folder. From the root of the control folder (the folder that holds `.claude/` and `calibration/`):
 
 ```bash
 uv run --with pytest python calibration/_answers/prove.py

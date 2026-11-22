@@ -31,16 +31,30 @@ jobs:
         run: uv sync --locked
       - name: Tests
         run: uv run --locked pytest -q --tb=short
-      # Report only while the build is CURRENT: most MUSTs have no test until sessions 9.2 and 9.3.
-      # Session 9.5 removes --report-only so that an untested MUST fails CI (DEV-001).
       - name: Requirement traceability
-        run: uv run --locked python scripts/trace.py --report-only
+        run: uv run --locked python scripts/trace.py
       - name: Manifest check
         run: uv run --locked python scripts/extract.py --repo . --verify-manifest
       - name: Privacy boundary
         run: uv run --locked python scripts/boundary.py
       - name: Scrubber self-test and example-list scan
         run: uv run --locked python scripts/ci_checks.py scrub
+
+  scripts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+      # REQ-003: no dependency is installed in this job and uv never syncs the project.
+      - name: Scripts import with no dependencies installed
+        run: uv run --no-project --isolated --python ${{ matrix.python-version }} python -I scripts/check_imports.py
 
   kit:
     needs: test
@@ -89,6 +103,11 @@ jobs:
         run: uv sync --locked
       - name: Blocks marked bash run
         run: uv run --locked python scripts/run_blocks.py
+      # F-01 of review 9.4: the three README blocks must pass a second time, after the proof has run.
+      - name: Blocks marked bash run, second time
+        run: uv run --locked python scripts/run_blocks.py
+      - name: Manifest check after the blocks
+        run: uv run --locked python scripts/extract.py --repo . --verify-manifest
       - name: Offline link check
         run: uv run --locked python scripts/check_links.py
 

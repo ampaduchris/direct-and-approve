@@ -3,7 +3,7 @@
 
 Runs the five kit scripts on all eleven examples and compares exit codes and
 key output with EXPECT below. Prints one line per run and writes the full
-output to PROOF.txt beside this file.
+output to PROOF.txt in the system temporary folder.
 
   uv run --with pytest python calibration/_answers/prove.py
 
@@ -99,7 +99,7 @@ def main() -> int:
         cwd = EXAMPLES / ex
         before = {p.name: p.read_bytes() for p in cwd.iterdir() if p.is_file()}
         for tool, cmd in commands(ex).items():
-            proc = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+            proc = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, env={**__import__("os").environ, "PYTEST_ADDOPTS": "-p no:cacheprovider", "PYTHONDONTWRITEBYTECODE": "1"})
             out = proc.stdout + proc.stderr
             want_code, want_text = EXPECT.get((ex, tool), (0, []))
             missing = [t for t in want_text if t not in out]
@@ -111,7 +111,7 @@ def main() -> int:
             log.append(f"$ cd {ex} && {shown}\n{out.rstrip()}\n[exit {proc.returncode}]\n")
         if ex in FRESH:
             code, want = FRESH[ex]
-            proc = subprocess.run([PY, "-c", code], cwd=cwd, capture_output=True, text=True)
+            proc = subprocess.run([PY, "-c", code], cwd=cwd, capture_output=True, text=True, env={**__import__("os").environ, "PYTHONDONTWRITEBYTECODE": "1"})
             got = proc.stdout.strip()
             ok = got == want
             bad += not ok
@@ -121,7 +121,7 @@ def main() -> int:
         if before != after:
             bad += 1
             print(f"FAIL {ex} files changed by the run")
-    (HERE / "PROOF.txt").write_text("\n".join(log))
+    (Path(__import__("tempfile").gettempdir()) / "PROOF.txt").write_text("\n".join(log))
     print(f"{'ALL RUNS MATCH' if not bad else str(bad) + ' MISMATCH(ES)'}: "
           f"{len(TARGET)} examples, 5 tools each, plus {len(FRESH)} fresh-input probes")
     return 1 if bad else 0

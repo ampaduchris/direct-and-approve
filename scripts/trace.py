@@ -9,6 +9,8 @@ Reads every table row in docs/spec.md that begins `| REQ-`, reads the
 - a row of the scope table (the "Scope to requirements" heading) names no MUST.
 
 Withdrawn requirements (a row containing the word "withdrawn") are ignored.
+A MUST whose proof column names only a document check (`D:`) and no test (T, P) is printed as
+DOC-ONLY and is not counted as untested. DEV-019 of this repository records why.
 Usage: python scripts/trace.py [--report-only] [--spec PATH] [--tests DIR]
 """
 
@@ -23,10 +25,18 @@ MARK = re.compile(r"mark\.req\(([^)]*)\)")
 ID = re.compile(r"""["'](REQ-\d{3})["']""")
 SCOPE_HEADING = re.compile(r"^###\s+\d+\.1\s+Scope to requirements")
 ANY_HEADING = re.compile(r"^#{2,3}\s")
+DOC_ONLY: set[str] = set()
+
+
+def doc_only(row: str) -> bool:
+    """True if the row's proof cell has only document checks: every `kind:` is D and no test token."""
+    proof = row.strip().strip("|").split("|")[-1]
+    kinds = {seg.split(":")[0].strip() for seg in proof.split(";") if ":" in seg}
+    return kinds == {"D"} and not re.search(r"\b[TP]\b", proof)
 
 
 def read_spec(spec: Path) -> tuple[dict[str, str], list[str], list[tuple[str, list[str]]]]:
-    """Return (id -> level, duplicate ids, scope rows as (text, referenced ids))."""
+    """Return (id -> level, duplicate ids, scope rows as (text, referenced ids)); fills DOC_ONLY."""
     levels: dict[str, str] = {}
     dupes: list[str] = []
     scope: list[tuple[str, list[str]]] = []
@@ -42,6 +52,8 @@ def read_spec(spec: Path) -> tuple[dict[str, str], list[str], list[tuple[str, li
             if m.group(1) in levels:
                 dupes.append(m.group(1))
             levels[m.group(1)] = m.group(2)
+            if doc_only(line):
+                DOC_ONLY.add(m.group(1))
         if in_scope and line.startswith("|") and not re.match(r"^\|\s*(BUILD\.md scope bullet|Scope bullet|-)", line):
             cells = [c.strip() for c in line.strip().strip("|").split("|")]
             if len(cells) >= 2:
@@ -73,14 +85,16 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--tests", type=Path, default=ROOT / "tests")
     args = ap.parse_args(argv)
 
+    DOC_ONLY.clear()
     levels, dupes, scope = read_spec(args.spec)
     tags = read_tags(args.tests)
 
     untested = []
     for rid in sorted(levels):
         n = tags.get(rid, 0)
-        print(f"{rid}  {levels[rid]:<8} {f'{n} test(s)' if n else 'NO TEST'}")
-        if not n and levels[rid].startswith("MUST"):
+        skipped = not n and rid in DOC_ONLY
+        print(f"{rid}  {levels[rid]:<8} {f'{n} test(s)' if n else 'DOC-ONLY' if skipped else 'NO TEST'}")
+        if not n and not skipped and levels[rid].startswith("MUST"):
             untested.append(rid)
 
     errors = []

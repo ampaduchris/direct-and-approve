@@ -90,8 +90,8 @@ def test_method_calibration_has_eleven_examples_and_the_answers():
         assert (METHOD / "calibration/_answers" / name).is_file()
 
 
-# Not tagged REQ-016: that requirement also covers brief.py, which is withheld until the owner answers
-# the GATE (DEV-008). This test proves only the section.py half.
+# REQ-016 covers section.py only since DEV-020 (the owner's decision of 22 Nov 2026).
+@pytest.mark.req("REQ-016")
 def test_section_py_is_published_and_names_no_private_path():
     text = (METHOD / "tools/section.py").read_text()
     assert not re.search(r"/Users/|/home/|builds/\d|UPSTREAM", text)

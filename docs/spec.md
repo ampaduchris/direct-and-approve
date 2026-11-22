@@ -1,6 +1,6 @@
 # direct-and-approve specification
 
-Status: adopted in session 9.1 and reconciled with the control folder on 22 Nov 2026. Section 16.3 says what is settled and what is still open. Nothing in this document has been run except the repository checks of session 9.1 listed in the build log.
+Status: adopted in session 9.1 and reconciled with the control folder on 22 Nov 2026. Section 16.3 says what is settled and what is still open; section 16.5 is the evidence at release.
 
 ## 1. Purpose
 
@@ -72,7 +72,7 @@ The README repeats this table.
 | REQ-012 | MUST | Owner-specific values (the owner's name, account name, private repository name) appear only as the placeholders `<owner>`, `<account>`, `<control-repo>`. | T: fixture with all three planted |
 | REQ-013 | MUST | `docs/procedure.md` explains each command word in at most three sentences and links to the line of `method/CLAUDE.md` that defines it. Every command word in the table has an entry. | D; T: word list comparison |
 | REQ-014 | SHOULD | Withdrawn on 22 Nov 2026: the owner chose at the 9.1 GATE not to publish the upstream procedure (DEV-004). No upstream item has been filed by it yet. The row stays so that the id is not reused. | None |
-| REQ-016 | MUST | `method/tools/brief.py` and `method/tools/section.py` are `copy` entries, published at the owner's choice of 22 Nov 2026 (DEV-005). The copy runs on `method/` as a control folder and names no real repository, build folder or account. If the private script cannot meet this through replacements alone, session 9.2 raises a GATE and does not edit `method/` by hand (N11). | T: `brief.py --no-gh` run on a copy of the fixture; forbidden-pattern and name scan of both files |
+| REQ-016 | MUST | `method/tools/section.py` is a `copy` entry, published at the owner's choice of 22 Nov 2026 (DEV-005). It names no real repository, build folder or account. `brief.py` is not published in v1.0 (DEV-020, N11). | T: name scan of `section.py` |
 
 ## 6. The standard (S2)
 
@@ -251,3 +251,12 @@ Status as of session 9.1, 22 Nov 2026. SETTLED means a check was read or run in 
 ### 16.4 Reconcile record (session 9.1)
 
 What changed in the control folder between the draft (15 Nov 2026) and adoption (22 Nov 2026), read from `git log` of the control folder: `CLAUDE.md` changed once, on 16 Nov, when signing and the timer wording were added. `tools/scrub.py` gained `--history` and `--text-file` on 16 Nov. `STANDARD.md`, `SETUP.md`, `FRONTLOAD.md` and the skills did not change in that period. `UPSTREAM.md` changed often; it is not published (REQ-014). Added to this document as a result: LIM-8, REQ-016, N11, N12 and the "Context and tool output" heading in REQ-011. Whether a section was added to `SETUP.md` or `FRONTLOAD.md` is not a concern here because both are `static` entries written for the public in 9.3.
+
+### 16.5 Evidence at release (session 9.5, 22 Nov 2026)
+
+Measured with Python 3.11.15 (the `scripts` job on 3.11 only was run locally), 3.13 for the suite, pytest from the lockfile, on macOS. CI runs 3.11, 3.12 and 3.13 on Ubuntu 24.04.
+
+- `uv run --locked pytest -q`: 206 passed. `scripts/trace.py`: 72 requirements, 0 untested MUST, 0 errors. REQ-083 prints DOC-ONLY (DEV-019).
+- README "Verify it yourself", run twice with the manifest check after each run: no cache or bytecode folder is left under `method/`.
+- Mutation: mutmut could not be run; function-level probes are in `docs/mutation.md`.
+- Not checked: Scorecard (after release), private vulnerability reporting and Dependabot alerts (the API shows neither), the owner's scrubber on the full history (REQ-083, release checklist), skills loading from a copied `method/.claude/skills/` (N3), `method/SETUP.md` steps 8 and 9.
