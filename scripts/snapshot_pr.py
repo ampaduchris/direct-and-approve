@@ -5,13 +5,15 @@
 
 Calls the GitHub command line (`gh api`) with the caller's own login, so it needs the network and
 reads only. Saves the title, body, opened and merged times, the commits with their dates, every
-comment and review, and the CI runs of the commits, with the fetch date. The document that quotes the
+comment and review, and the CI runs of the commits, with the fetch date. Email addresses are
+replaced by <email>, so that the saved record passes the privacy boundary. The document that quotes the
 record is compared with this file offline by a test. Standard library only.
 """
 
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -28,6 +30,20 @@ def gh(path: str) -> object:
         text = text.replace("][", ",")
         return [x for page in json.loads("[" + text[1:-1] + "]") for x in (page if isinstance(page, list) else [page])]
     return json.loads(text or "null")
+
+
+EMAIL = re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")
+
+
+def redact(value):
+    """Replace every email address in the saved record with <email>: the record is published (REQ-035)."""
+    if isinstance(value, str):
+        return EMAIL.sub("<email>", value)
+    if isinstance(value, list):
+        return [redact(v) for v in value]
+    if isinstance(value, dict):
+        return {k: redact(v) for k, v in value.items()}
+    return value
 
 
 def minutes_between(a: str, b: str) -> float:
@@ -88,7 +104,7 @@ def main(argv: list[str]) -> int:
     if len(args) != 2 or "/" not in args[0] or not args[1].isdigit():
         print(__doc__.strip().splitlines()[2].strip(), file=sys.stderr)
         return 2
-    data = snapshot(args[0], int(args[1]))
+    data = redact(snapshot(args[0], int(args[1])))
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(f"saved {out}: {len(data['commits'])} commits, {len(data['runs'])} runs, "
