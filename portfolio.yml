@@ -1,0 +1,9 @@
+name: direct-and-approve
+pitch: The procedure one person uses to direct a coding agent and approve every change, published with the scripts that check it and one real session traced from instruction to merge.
+stack: [markdown, python, uv, pytest, hypothesis, mutmut]
+tests: 0
+release: none
+released_on: none
+demo_url: https://github.com/ampaduchris/direct-and-approve/blob/main/docs/worked-example.md
+repo_url: https://github.com/ampaduchris/direct-and-approve
+example_pr_url: https://github.com/ampaduchris/direct-and-approve/pull/1

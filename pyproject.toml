@@ -1,0 +1,26 @@
+[project]
+name = "direct-and-approve"
+version = "0.0.0"
+description = "The procedure for directing a coding agent and approving every change, with the scripts that check it."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Chris Ampadu" }]
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "hypothesis>=6",
+    "mutmut>=3",
+]
+
+[tool.uv]
+# The repository holds documents and scripts. Nothing is built or published (BUILD.md: no PyPI package).
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers"
+markers = ["req(id): the requirement id this test proves (REQ-###)"]
