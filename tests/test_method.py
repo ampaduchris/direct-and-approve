@@ -90,7 +90,8 @@ def test_method_calibration_has_eleven_examples_and_the_answers():
         assert (METHOD / "calibration/_answers" / name).is_file()
 
 
-@pytest.mark.req("REQ-016")
+# Not tagged REQ-016: that requirement also covers brief.py, which is withheld until the owner answers
+# the GATE (DEV-008). This test proves only the section.py half.
 def test_section_py_is_published_and_names_no_private_path():
     text = (METHOD / "tools/section.py").read_text()
     assert not re.search(r"/Users/|/home/|builds/\d|UPSTREAM", text)
