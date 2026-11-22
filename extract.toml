@@ -1,0 +1,191 @@
+# extract.toml: the mapping from a control folder to method/ (spec section 7).
+# Written in session 9.1 and implemented by scripts/extract.py in session 9.2.
+#
+# Entry kinds:
+#   copy    one file of the control folder, replacements applied
+#   tree    a folder of the control folder; only files matched by `include` and not by `exclude`;
+#           replacements apply only to files matched by `replace_in`; every other file is copied as it is
+#   static  a file of this repository's static/ folder, copied unchanged
+#
+# Replacements are literal and case-sensitive, applied longest `from` first (REQ-032).
+# No `to` contains a `from` (REQ-039). A replacement never touches a .py file under a skills tree (REQ-071).
+# After replacement, any `from` string or forbidden pattern left in an output file or file name is a
+# private marker and refuses the run (REQ-033).
+
+[meta]
+schema = 1
+output = "method"
+manifest = "method/MANIFEST.json"
+# The source date is the --date value, else the date of the control folder's newest commit (REQ-040).
+
+[[replacement]]
+from = "ampaduchris/portfolio"
+to = "<account>/<control-repo>"
+
+[[replacement]]
+from = "Chris Ampadu"
+to = "<owner>"
+
+[[replacement]]
+from = "ampaduchris"
+to = "<account>"
+
+# The real location of the calibration set is private; under method/ it is calibration/.
+[[replacement]]
+from = "private/frontload/F12-calibration"
+to = "calibration"
+
+# The kit finds its scripts three folders up from prove.py in the private tree
+# (private/frontload/F12-calibration/_answers) and one folder up from the control root under method/
+# (calibration/_answers). N2 in docs/spec.md.
+[[replacement]]
+from = "HERE.parents[3]"
+to = "HERE.parents[1]"
+
+# ---- S1 procedure and S2 standard ------------------------------------------------------------
+
+[[entry]]
+kind = "copy"
+source = "CLAUDE.md"
+target = "method/CLAUDE.md"
+replace = true
+
+[[entry]]
+kind = "copy"
+source = "STANDARD.md"
+target = "method/STANDARD.md"
+replace = true
+# REQ-021: the first line after the title is "Copied from the private authority on <date>."
+source_date_line = true
+
+# ---- Tools (S1, S7, REQ-016) -----------------------------------------------------------------
+
+[[entry]]
+kind = "copy"
+source = "tools/scrub.py"
+target = "method/tools/scrub.py"
+replace = false
+
+[[entry]]
+kind = "copy"
+source = "tools/section.py"
+target = "method/tools/section.py"
+replace = false
+
+# tools/brief.py is NOT listed. The owner chose to publish it (DEV-005), but it names real build folders
+# and reads the unpublished upstream ledger (N11). Session 9.2 raises a GATE before this entry exists.
+# [[entry]]
+# kind = "copy"
+# source = "tools/brief.py"
+# target = "method/tools/brief.py"
+
+# ---- S6 review and verification kit, calibration (REQ-070 to 074) ----------------------------------
+
+[[entry]]
+kind = "tree"
+source = ".claude/skills/independent-review"
+target = "method/.claude/skills/independent-review"
+include = ["SKILL.md", "scripts/*.py"]
+exclude = ["**/__pycache__/**", "**/*.pyc"]
+replace_in = ["SKILL.md"]
+
+[[entry]]
+kind = "tree"
+source = ".claude/skills/pre-pr-check"
+target = "method/.claude/skills/pre-pr-check"
+include = ["SKILL.md"]
+exclude = []
+replace_in = ["SKILL.md"]
+
+[[entry]]
+kind = "tree"
+source = "private/frontload/F12-calibration"
+target = "method/calibration"
+include = ["**/*"]
+# README.md is a static entry below, so that it carries the demonstration-only notice (REQ-073).
+exclude = ["README.md", "**/__pycache__/**", "**/*.pyc", "**/.pytest_cache/**"]
+replace_in = ["**/*.md", "**/*.py", "**/*.txt"]
+
+# ---- Static files written for the public ----------------------------------------------------------
+
+[[entry]]
+kind = "static"
+source = "static/SETUP.md"
+target = "method/SETUP.md"
+
+[[entry]]
+kind = "static"
+source = "static/FRONTLOAD.md"
+target = "method/FRONTLOAD.md"
+
+[[entry]]
+kind = "static"
+source = "static/PLAN.md"
+target = "method/PLAN.md"
+
+[[entry]]
+kind = "static"
+source = "static/builds/00-example/BUILD.md"
+target = "method/builds/00-example/BUILD.md"
+
+[[entry]]
+kind = "static"
+source = "static/builds/00-example/SESSIONS.md"
+target = "method/builds/00-example/SESSIONS.md"
+
+[[entry]]
+kind = "static"
+source = "static/private/denylist.example.txt"
+target = "method/private/denylist.example.txt"
+
+[[entry]]
+kind = "static"
+source = "static/calibration/README.md"
+target = "method/calibration/README.md"
+
+[[entry]]
+kind = "static"
+source = "static/calibration/_answers/README.md"
+target = "method/calibration/_answers/README.md"
+
+# ---- Forbidden patterns (REQ-033, REQ-035) --------------------------------------------------------
+# Regular expressions, matched per line. The run reports entry and line number, never the matched text.
+
+[forbidden]
+patterns = [
+  '/Users/',
+  '/home/',
+  'C:\\Users\\',
+  # An email address, except on the reserved example domains.
+  '[A-Za-z0-9._%+-]+@(?!example\.(?:com|org|net)\b)[A-Za-z0-9.-]+\.[A-Za-z]{2,}',
+  # A link to a private artifact or session of the agent's app.
+  'claude\.ai/(?:code|artifact|epitaxy|chat)',
+  'claude://',
+]
+
+# ---- Privacy boundary (REQ-111, REQ-112) ----------------------------------------------------------
+
+[boundary]
+# Paths that must not exist anywhere in the repository tree, as glob patterns relative to the root.
+forbidden_paths = [
+  "**/denylist.txt",
+  "**/settings.local.json",
+  "**/F13-coherence.md",
+  "**/private/**",
+  "method/builds/*",
+]
+# Exceptions to forbidden_paths.
+allow_paths = [
+  "method/private/denylist.example.txt",
+  "method/builds/00-example",
+  "method/builds/00-example/*",
+  "tests/fixtures/**",
+]
+# Files that plant a forbidden pattern on purpose, so that REQ-112 skips them.
+pattern_allowlist = [
+  "tests/fixtures/**",
+  "tests/test_*.py",
+  "extract.toml",
+  "docs/spec.md",
+  "docs/what-stays-private.md",
+]
