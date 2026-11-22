@@ -1,0 +1,6 @@
+def median(values):
+    if not values:
+        raise ValueError("median of no values")
+    ordered = sorted(values)
+    middle = len(ordered) // 2
+    return ordered[middle]

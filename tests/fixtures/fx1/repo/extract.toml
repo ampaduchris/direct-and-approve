@@ -1,0 +1,113 @@
+[meta]
+schema = 1
+output = "method"
+manifest = "method/MANIFEST.json"
+
+[[replacement]]
+from = "adafixture/control"
+to = "<account>/<control-repo>"
+
+[[replacement]]
+from = "Ada Fixture"
+to = "<owner>"
+
+[[replacement]]
+from = "adafixture"
+to = "<account>"
+
+[[replacement]]
+from = "private/frontload/F12-calibration"
+to = "calibration"
+
+[[replacement]]
+from = "HERE.parents[3]"
+to = "HERE.parents[1]"
+
+[[entry]]
+kind = "copy"
+source = "CLAUDE.md"
+target = "method/CLAUDE.md"
+replace = true
+
+[[entry]]
+kind = "copy"
+source = "STANDARD.md"
+target = "method/STANDARD.md"
+replace = true
+source_date_line = true
+
+[[entry]]
+kind = "copy"
+source = "tools/scrub.py"
+target = "method/tools/scrub.py"
+replace = false
+
+[[entry]]
+kind = "copy"
+source = "tools/section.py"
+target = "method/tools/section.py"
+replace = false
+
+[[entry]]
+kind = "tree"
+source = ".claude/skills/independent-review"
+target = "method/.claude/skills/independent-review"
+include = ["SKILL.md", "scripts/*.py"]
+exclude = ["**/__pycache__/**", "**/*.pyc"]
+replace_in = ["SKILL.md"]
+
+[[entry]]
+kind = "tree"
+source = ".claude/skills/pre-pr-check"
+target = "method/.claude/skills/pre-pr-check"
+include = ["SKILL.md"]
+exclude = []
+replace_in = ["SKILL.md"]
+
+[[entry]]
+kind = "tree"
+source = "private/frontload/F12-calibration"
+target = "method/calibration"
+include = ["**/*"]
+exclude = ["README.md", "**/__pycache__/**", "**/*.pyc"]
+replace_in = ["**/*.md", "**/*.py"]
+
+[[entry]]
+kind = "static"
+source = "static/PLAN.md"
+target = "method/PLAN.md"
+
+[[entry]]
+kind = "static"
+source = "static/builds/00-example/BUILD.md"
+target = "method/builds/00-example/BUILD.md"
+
+[[entry]]
+kind = "static"
+source = "static/builds/00-example/SESSIONS.md"
+target = "method/builds/00-example/SESSIONS.md"
+
+[[entry]]
+kind = "static"
+source = "static/private/denylist.example.txt"
+target = "method/private/denylist.example.txt"
+
+[[entry]]
+kind = "static"
+source = "static/calibration/README.md"
+target = "method/calibration/README.md"
+
+[[entry]]
+kind = "static"
+source = "static/calibration/_answers/README.md"
+target = "method/calibration/_answers/README.md"
+
+[forbidden]
+patterns = [
+  '/Users/',
+  '/home/',
+  'C:\\Users\\',
+  '[A-Za-z0-9._%+-]+@(?!example\.(?:com|org|net)\b)[A-Za-z0-9.-]+\.[A-Za-z]{2,}',
+  'claude\.ai/(?:code|artifact|epitaxy|chat)',
+  'claude://',
+]

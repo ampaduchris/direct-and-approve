@@ -1,0 +1,6 @@
+# Private in the real folder. This is an invented example list, one term per line.
+# The real list is never published. See docs/what-stays-private.md.
+
+Mara Example
+example-project
+example-colleague
